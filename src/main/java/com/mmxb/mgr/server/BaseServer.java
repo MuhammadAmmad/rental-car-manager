@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Xing on 2015/11/23.
@@ -20,6 +21,9 @@ public abstract class BaseServer {
 
     @Autowired
     protected HttpServletRequest request;
+
+    @Autowired
+    protected HttpServletResponse response;
 
     public SqlSession openSession(){
         if (sqlSessionFactory == null){
