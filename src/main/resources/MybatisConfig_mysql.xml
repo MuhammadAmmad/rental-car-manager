@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+    <mappers>
+        <mapper resource="mysql.sqlmap/CarMapper.xml" />
+        <mapper resource="mysql.sqlmap/FeedBackMapper.xml" />
+        <mapper resource="mysql.sqlmap/OrderMapper.xml" />
+        <mapper resource="mysql.sqlmap/ShopMapper.xml" />
+        <mapper resource="mysql.sqlmap/UserMapper.xml" />
+    </mappers>
+</configuration>
