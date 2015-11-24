@@ -26,7 +26,6 @@ public class UserServer extends BaseServer{
         return LoggerFactory.getLogger(this.getClass());
     }
 
-    @RequestMapping(value = "/count",method = RequestMethod.GET)
     public int count(){
         SqlSession session = openSession();
         UserMapper userMapper = session.getMapper(UserMapper.class);

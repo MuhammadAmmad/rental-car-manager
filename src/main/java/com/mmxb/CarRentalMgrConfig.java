@@ -5,8 +5,6 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -26,12 +24,6 @@ public class CarRentalMgrConfig {
     @Autowired
     @Qualifier("mgrDataSource")
     private DataSource mgrDataSource;
-
-    @Bean(name = "mgrDataSource")
-    @ConfigurationProperties(prefix = "mgr.jdbc")
-    public DataSource mgrDataSource() {
-        return  DataSourceBuilder.create().build();
-    }
 
     @Bean
     public SqlSessionFactory mgrSqlSessionFactory() throws Exception {

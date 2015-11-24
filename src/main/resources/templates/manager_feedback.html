@@ -1,27 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" type="text/css" href="css/main.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-	<title>汽车租赁管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"
+          media="screen"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/main.css}" href="../static/css/main.css"/>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{image/favicon.ico}" href="../static/image/favicon.ico"/>
+    <title>汽车租赁管理系统</title>
 </head>
 <body>
 
 <ul class="nav nav-tabs">
-	  <li role="presentation"><a href="manager_user.html">用户管理</a></li>
-	  <li role="presentation"><a href="manager_car.html">车辆管理</a></li>
-	  <li role="presentation" ><a href="manager_shop.html">店铺管理</a></li>
-	  <li role="presentation"><a href="manager_order.html">订单管理</a></li>
-	  <li role="presentation"   class="active"><a href="manager_feedback.html">投诉管理</a></li>
-	  <li role="presentation"><a href="manager_system.html">系统管理</a></li>
+    <li role="presentation"><a href="manager_user.html" th:href="@{/manager_user}">用户管理</a></li>
+    <li role="presentation"><a href="manager_car.html" th:href="@{/manager_car}">车辆管理</a></li>
+    <li role="presentation"><a href="manager_shop.html" th:href="@{/manager_shop}">店铺管理</a></li>
+    <li role="presentation"><a href="manager_order.html" th:href="@{/manager_order}">订单管理</a></li>
+    <li role="presentation" class="active"><a href="manager_feedback.html" th:href="@{/manager_feedback}">投诉管理</a></li>
+    <li role="presentation"><a href="manager_system.html" th:href="@{/manager_system}">系统管理</a></li>
+    <li>
+        <form th:action="@{/logout}" method="post" class="logout">
+            <input type="submit" class="btn btn-default" value="登出"/>
+        </form>
+    </li>
 </ul>
 
 
 <form class="search_width">
-	<div class="input-group">
-      <input type="text" class="form-control" placeholder="搜索关键字: 投诉单号/用户名/手机号">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="搜索关键字: 投诉单号/用户名/手机号"/>
       <span class="input-group-btn">
         <button class="btn btn-primary" type="button">搜索</button>
       </span>
@@ -29,42 +36,35 @@
 </form>
 
 <div class="count_width">
-	<div class="panel panel-primary">
-	  <div class="panel-body text-center">统计数据</div>
-	  <div class="panel-footer text-center">目前共有 <strong> 1320 </strong> 个反馈订单</div>
-	</div>
+    <div class="panel panel-primary">
+        <div class="panel-body text-center">统计数据</div>
+        <div class="panel-footer text-center">目前共有 <strong> 1320 </strong> 个反馈订单</div>
+    </div>
 </div>
 
 <div class="feedback_table_width">
-	<table class="table table-hover text-center">
-	   <thead>
-	      <tr>
-	         <th class="text-center">投诉单号</th>
-	         <th class="text-center">用户姓名</th>
-	         <th class="text-center">用户手机号</th>
-	         <th class="text-center">投诉时间</th>
-	         <th class="text-center">处理</th>
-	      </tr>
-	   </thead>
-	   <tbody>
-	      <tr>
-	         <td>Tanmay</td>
-	         <td>Bangalore</td>
-	         <td>560001</td>
-	         <td>Bangalore</td>
-	         <td><a href="edit_feedback.html"><img src="img/edit.png"></td>
-	      </tr>
-	      <tr>
-	         <td>Tanmay</td>
-	         <td>Bangalore</td>
-	         <td>560001</td>
-	         <td>Bangalore</td>
-	         <td><a href="edit_feedback.html"><img src="img/edit.png"></td>
-	      </tr>
-	   </tbody>
-	</table>
+    <table class="table table-hover text-center">
+        <thead>
+        <tr>
+            <th class="text-center">投诉单号</th>
+            <th class="text-center">用户姓名</th>
+            <th class="text-center">用户手机号</th>
+            <th class="text-center">投诉时间</th>
+            <th class="text-center">处理</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Tanmay</td>
+            <td>Bangalore</td>
+            <td>560001</td>
+            <td>Bangalore</td>
+            <td><a href="edit_feedback.html" th:href="@{/edit_feedback}"><img src="../static/image/edit.png"
+                                                                              th:src="@{image/edit.png}"/></a></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
 
 
 </body>
