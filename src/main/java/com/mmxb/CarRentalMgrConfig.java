@@ -5,6 +5,8 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -21,12 +23,14 @@ public class CarRentalMgrConfig {
     @Value("${mgr.jdbc.type:mysql}")
     private String jdbcType;
 
-    @Autowired
-    @Qualifier("mgrDataSource")
-    private DataSource mgrDataSource;
+    @Bean(name = "mgrDataSource")
+    @ConfigurationProperties(prefix = "mgr.jdbc")
+    public DataSource mgrDataSource() {
+        return DataSourceBuilder.create().build();
+    }
 
     @Bean
-    public SqlSessionFactory mgrSqlSessionFactory() throws Exception {
+    public SqlSessionFactory mgrSqlSessionFactory(@Qualifier("mgrDataSource") DataSource mgrDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(mgrDataSource);
         bean.setConfigLocation(new ClassPathResource("MybatisConfig_" + jdbcType + ".xml"));
@@ -34,7 +38,7 @@ public class CarRentalMgrConfig {
     }
 
     @Bean
-    public DataSourceTransactionManager transactionManager() throws Exception {
+    public DataSourceTransactionManager transactionManager(@Qualifier("mgrDataSource") DataSource mgrDataSource) throws Exception {
         return new DataSourceTransactionManager(mgrDataSource);
     }
 }

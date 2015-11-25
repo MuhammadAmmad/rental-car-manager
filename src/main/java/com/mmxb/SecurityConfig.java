@@ -24,12 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("mgrDataSource")
     private DataSource mgrDataSource;
 
-    @Bean(name = "mgrDataSource")
-    @ConfigurationProperties(prefix = "mgr.jdbc")
-    public DataSource mgrDataSource() {
-        return DataSourceBuilder.create().build();
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
