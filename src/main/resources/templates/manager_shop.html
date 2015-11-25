@@ -28,9 +28,9 @@
 
 <form class="search_width">
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="搜索关键字: 店铺名称/店铺地址"/>
+        <input type="text" class="form-control" placeholder="搜索关键字: 店铺名称/店铺地址" name="keyWord"/>
       <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">搜索</button>
+        <input class="btn btn-primary" type="submit" value="搜索" />
       </span>
     </div>
 </form>
@@ -38,7 +38,7 @@
 <div class="count_width">
     <div class="panel panel-primary">
         <div class="panel-body text-center">统计数据</div>
-        <div class="panel-footer text-center">目前共有 <strong> 1320 </strong> 个门店</div>
+        <div class="panel-footer text-center">目前共有 <strong th:text="${shopCount}"> 0 </strong> 个门店</div>
     </div>
 </div>
 
@@ -52,15 +52,17 @@
     <table class="table table-hover text-center">
         <thead>
         <tr>
+            <th class="text-center">ID</th>
             <th class="text-center">店铺名称</th>
             <th class="text-center">店铺地址</th>
             <th class="text-center">修改店铺信息</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>好点</td>
-            <td>杭州江干区下沙新雁公寓13幢1楼203室</td>
+        <tr th:each="shop : ${shops}">
+            <td th:text="${shop.id}"></td>
+            <td th:text="${shop.shopName}"></td>
+            <td th:text="${shop.position}"></td>
             <td><a href="edit_shop.html" th:href="@{/edit_shop}"><img src="../static/image/edit.png"
                                                                       th:src="@{image/edit.png}"/></a></td>
         </tr>

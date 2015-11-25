@@ -82,7 +82,7 @@
             <!--<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR"/>-->
         </table>
 
-		<table schema="car-rental-mgr" tableName="order"
+		<table schema="car-rental-mgr" tableName="orders"
                domainObjectName="Order" enableCountByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true">

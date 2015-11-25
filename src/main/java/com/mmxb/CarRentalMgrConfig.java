@@ -2,7 +2,6 @@ package com.mmxb;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -29,7 +28,7 @@ public class CarRentalMgrConfig {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean
+    @Bean(name = "mgrSqlSessionFactory")
     public SqlSessionFactory mgrSqlSessionFactory(@Qualifier("mgrDataSource") DataSource mgrDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(mgrDataSource);

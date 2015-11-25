@@ -1,9 +1,15 @@
 package com.mmxb.mgr.controller;
 
+import com.mmxb.mgr.dao.*;
+import com.mmxb.mgr.entity.OrderDetail;
+import com.mmxb.mgr.pojo.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * Created by Xing on 2015/11/24.
@@ -12,14 +18,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
 
+    @Autowired
+    UserDao userDao;
+
+    @Autowired
+    CarDao carDao;
+
+    @Autowired
+    ShopDao shopDao;
+
+    @Autowired
+    FeedBackDao feedBackDao;
+
+    @Autowired
+    OrderDao orderDao;
+
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model, @RequestParam(value = "keyWord", defaultValue = "") String keyWord) {
+        List<User> users = userDao.getUsers(keyWord);
+        model.addAttribute("userCount", users.size());
+        model.addAttribute("users", users);
         return "manager_user";
     }
 
     @RequestMapping("/manager_user")
-    public String manager_user(Model model,@RequestParam(value = "keyWord",defaultValue = "") String keyWord) {
-        System.out.println(keyWord);
+    public String manager_user(Model model, @RequestParam(value = "keyWord", defaultValue = "") String keyWord) {
+        List<User> users = userDao.getUsers(keyWord);
+        model.addAttribute("userCount", users.size());
+        model.addAttribute("users", users);
         return "manager_user";
     }
 
@@ -29,22 +55,34 @@ public class HomeController {
     }
 
     @RequestMapping("/manager_shop")
-    public String manager_shop() {
+    public String manager_shop(Model model, @RequestParam(value = "keyWord", defaultValue = "") String keyWord) {
+        List<Shop> shops = shopDao.getShops(keyWord);
+        model.addAttribute("shopCount", shops.size());
+        model.addAttribute("shops", shops);
         return "manager_shop";
     }
 
     @RequestMapping("/manager_order")
-    public String manager_order() {
+    public String manager_order(Model model, @RequestParam(value = "keyWord", defaultValue = "") String keyWord) {
+        List<OrderDetail> orderDetails = orderDao.getOrders(keyWord);
+        model.addAttribute("orderCount", orderDetails.size());
+        model.addAttribute("orders", orderDetails);
         return "manager_order";
     }
 
     @RequestMapping("/manager_feedback")
-    public String manager_feedback() {
+    public String manager_feedback(Model model, @RequestParam(value = "keyWord", defaultValue = "") String keyWord) {
+        List<FeedBack> feedBacks = feedBackDao.getFeedBacks(keyWord);
+        model.addAttribute("feedBackCount", feedBacks.size());
+        model.addAttribute("feedBacks", feedBacks);
         return "manager_feedback";
     }
 
     @RequestMapping("/manager_car")
-    public String manager_car() {
+    public String manager_car(Model model, @RequestParam(value = "keyWord", defaultValue = "") String keyWord) {
+        List<Car> cars = carDao.getCars(keyWord);
+        model.addAttribute("carCount", cars.size());
+        model.addAttribute("cars", cars);
         return "manager_car";
     }
 

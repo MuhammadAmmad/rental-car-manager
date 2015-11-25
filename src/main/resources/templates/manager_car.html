@@ -26,11 +26,11 @@
 </ul>
 
 
-<form class="search_width">
+<form class="search_width" method="get" action="/manager_car">
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="搜索关键字: 车牌号/车型/所在店铺"/>
+        <input type="text" class="form-control" placeholder="搜索关键字: 车牌号/车型/所在店铺" name="keyWord"/>
       <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">搜索</button>
+        <input class="btn btn-primary" type="submit" value="搜索" />
       </span>
     </div>
 </form>
@@ -38,7 +38,7 @@
 <div class="count_width">
     <div class="panel panel-primary">
         <div class="panel-body text-center">统计数据</div>
-        <div class="panel-footer text-center">目前共有 <strong> 1320 </strong> 辆车</div>
+        <div class="panel-footer text-center">目前共有 <strong th:text="${carCount}"> 0 </strong> 辆车</div>
     </div>
 </div>
 
@@ -53,6 +53,7 @@
     <table class="table table-hover text-center">
         <thead>
         <tr>
+            <th class="text-center">ID</th>
             <th class="text-center">车牌号</th>
             <th class="text-center">车型</th>
             <th class="text-center">所在店铺</th>
@@ -63,15 +64,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>浙123456</td>
-            <td>福特科斯特</td>
-            <td>杭州江干区下沙新雁公寓</td>
-            <td>是</td>
-            <td>良好</td>
-            <td><a href="edit_car.html" th:href="@{/edit_car}"><img src="../static/image/edit.png"
+        <tr th:each="car : ${cars}">
+            <td th:text="${car.id}"></td>
+            <td th:text="${car.carNumber}"></td>
+            <td th:text="${car.carType}"></td>
+            <td th:text="${car.shopName}"></td>
+            <td th:if="${car.isRentaling} == '1'" th:text="已出租"></td>
+            <td th:if="${car.isRentaling} == '0'" th:text="未出租"></td>
+            <td th:text="${car.carStatus}"></td>
+            <td><a href="edit_car.html" th:href="#{/edit_car}"><img src="../static/image/edit.png"
                                                                     th:src="@{image/edit.png}"/></a></td>
-            <td><a href="" th:href="@{/#}"><img src="../static/image/delete.png" th:src="@{image/delete.png}"/></a></td>
+            <td><a href="" th:href="@{/delete_car}"><img src="../static/image/delete.png" th:src="@{image/delete.png}"/></a></td>
         </tr>
         </tbody>
     </table>
