@@ -45,6 +45,9 @@
 <div th:if="${success} == false">
     <strong>添加失败</strong>
 </div>
+<div th:if="${updateSuccess} == false">
+    <strong>修改失败</strong>
+</div>
 
 <div class="car_table_width">
 
@@ -75,9 +78,9 @@
             <td th:if="${car.isRentaling} == '1'" th:text="已出租"></td>
             <td th:if="${car.isRentaling} == '0'" th:text="未出租"></td>
             <td th:text="${car.carStatus}"></td>
-            <td><a href="edit_car.html" th:href="#{/edit_car}"><img src="../static/image/edit.png"
+            <td><a href="edit_car.html" th:href="@{/edit_car(id=${car.id})}"><img src="../static/image/edit.png"
                                                                     th:src="@{image/edit.png}"/></a></td>
-            <td><a href="" th:href="@{/delete_car}"><img src="../static/image/delete.png" th:src="@{image/delete.png}"/></a></td>
+            <td><a href="" th:href="@{/delete_car(id=${car.id})}"><img src="../static/image/delete.png" th:src="@{image/delete.png}"/></a></td>
         </tr>
         </tbody>
     </table>

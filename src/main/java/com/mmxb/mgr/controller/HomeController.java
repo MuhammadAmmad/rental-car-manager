@@ -108,7 +108,15 @@ public class HomeController {
     }
 
     @RequestMapping("/edit_car")
-    public String edit_car() {
+    public String edit_car(@RequestParam(value = "id", defaultValue = "") String id,Model model) {
+        CarAdd carAdd = carDao.selectById(Integer.valueOf(id));
+        String isRental = carAdd.getIsRental();
+        if ("1".equals(isRental)){
+            carAdd.setIsRental("checked");
+        }else {
+            carAdd.setIsRental(null);
+        }
+        model.addAttribute("carAdd",carAdd);
         return "edit_car";
     }
 
@@ -146,6 +154,25 @@ public class HomeController {
         model.addAttribute("shops", shops);
         model.addAttribute("success",insert);
         return "manager_shop";
+    }
+
+    @RequestMapping("/delete_car")
+    public String deleteCar(@RequestParam(value = "id", defaultValue = "") String id,Model model){
+        carDao.deleteCar(id);
+        List<Car> cars = carDao.getCars("");
+        model.addAttribute("carCount", cars.size());
+        model.addAttribute("cars", cars);
+        return "manager_car";
+    }
+
+    @RequestMapping("/updateCar")
+    public String updateCar(@ModelAttribute CarAdd carAdd,Model model){
+        boolean b = carDao.updateCarAdd(carAdd);
+        model.addAttribute("updateSuccess",b);
+        List<Car> cars = carDao.getCars("");
+        model.addAttribute("carCount", cars.size());
+        model.addAttribute("cars", cars);
+        return "manager_car";
     }
 
 }

@@ -1,5 +1,6 @@
 package com.mmxb.mgr.dao;
 
+import com.mmxb.mgr.entity.CarAdd;
 import com.mmxb.mgr.mapper.CarMapper;
 import com.mmxb.mgr.mapper.ShopMapper;
 import com.mmxb.mgr.pojo.Car;
@@ -64,6 +65,60 @@ public class CarDao {
             return true;
         }else {
             return false;
+        }
+    }
+
+    public void deleteCar(String id) {
+        SqlSession sqlSession = openSession();
+        CarMapper mapper = sqlSession.getMapper(CarMapper.class);
+        mapper.deleteByPrimaryKey(Integer.valueOf(id));
+    }
+
+    public CarAdd selectById(Integer id) {
+        CarAdd carAdd = new CarAdd();
+        SqlSession sqlSession = openSession();
+        CarMapper mapper = sqlSession.getMapper(CarMapper.class);
+        ShopMapper shopMapper = sqlSession.getMapper(ShopMapper.class);
+        Car car = mapper.selectByPrimaryKey(id);
+        Shop shop = shopMapper.selectByPrimaryKey(car.getShopId());
+        carAdd.setId(car.getId());
+        carAdd.setCarStatus(car.getCarStatus());
+        carAdd.setCarType(car.getCarType());
+        carAdd.setCarNumber(car.getCarNumber());
+        carAdd.setIsRental(car.getIsRentaling());
+        carAdd.setShopName(shop == null ? "" : shop.getShopName());
+        return carAdd;
+    }
+
+
+    public boolean updateCarAdd(CarAdd carAdd) {
+        Car car = new Car();
+        SqlSession sqlSession = openSession();
+        ShopMapper shopMapper = sqlSession.getMapper(ShopMapper.class);
+        CarMapper carMapper =sqlSession.getMapper(CarMapper.class);
+        String shopName = carAdd.getShopName();
+        ShopExample shopExample = new ShopExample();
+        shopExample.createCriteria().andShopNameEqualTo(shopName);
+        List<Shop> shops = shopMapper.selectByExample(shopExample);
+        if (shops != null && shops.size() > 0){
+            car.setShopName(shops.get(0).getShopName());
+            car.setShopId(shops.get(0).getId());
+        }else {
+            return false;
+        }
+        CarExample carExample = new CarExample();
+        carExample.createCriteria().andCarNumberEqualTo(carAdd.getCarNumber()).andIdNotEqualTo(carAdd.getId());
+        List<Car> cars = carMapper.selectByExample(carExample);
+        if (cars != null && cars.size() > 0){
+            return false;
+        }else {
+            car.setId(carAdd.getId());
+            car.setCarStatus(carAdd.getCarStatus());
+            car.setCarNumber(carAdd.getCarNumber());
+            car.setCarType(carAdd.getCarType());
+            car.setIsRentaling("on".equals(carAdd.getIsRental()) ? "1" : "0");
+            carMapper.updateByPrimaryKey(car);
+            return true;
         }
     }
 }

@@ -4,12 +4,20 @@ package com.mmxb.mgr.entity;
  * Created by Xing on 2015/11/26.
  */
 public class CarAdd {
+    private Integer id;
     private String carNumber;
     private String carType;
     private String shopName;
     private String isRental;
     private String carStatus;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public String getCarStatus() {
         return carStatus;
     }

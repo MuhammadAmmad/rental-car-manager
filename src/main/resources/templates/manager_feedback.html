@@ -61,7 +61,7 @@
             <td th:text="${feedBack.userName}"></td>
             <td th:text="${feedBack.userPhone}"></td>
             <td th:text="${feedBack.feedbackTime}"></td>
-            <td><a href="edit_feedback.html" th:href="@{/edit_feedback}"><img src="../static/image/edit.png"
+            <td><a href="edit_feedback.html" th:href="@{/edit_feedback(id=${feedBack.id})}"><img src="../static/image/edit.png"
                                                                               th:src="@{image/edit.png}"/></a></td>
         </tr>
         </tbody>

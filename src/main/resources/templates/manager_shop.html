@@ -67,7 +67,7 @@
             <td th:text="${shop.id}"></td>
             <td th:text="${shop.shopName}"></td>
             <td th:text="${shop.position}"></td>
-            <td><a href="edit_shop.html" th:href="@{/edit_shop}"><img src="../static/image/edit.png"
+            <td><a href="edit_shop.html" th:href="@{/edit_shop(id=${shop.id})}"><img src="../static/image/edit.png"
                                                                       th:src="@{image/edit.png}"/></a></td>
         </tr>
         </tbody>

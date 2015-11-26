@@ -73,7 +73,7 @@
             <td th:text="${order.backTime}"></td>
             <td th:text="${order.otherServer}"></td>
             <td th:text="${order.memo}"></td>
-            <td><a href="edit_order.html" th:href="@{/edit_order}"><img src="../static/image/edit.png"
+            <td><a href="edit_order.html" th:href="@{/edit_order(id=${order.id})}"><img src="../static/image/edit.png"
                                                                         th:src="@{image/edit.png}"/></a></td>
         </tr>
         </tbody>

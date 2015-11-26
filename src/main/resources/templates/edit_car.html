@@ -26,26 +26,34 @@
 </ul>
 
 <div class="edit_width">
-    <form>
+    <form method="post" th:action="@{/updateCar}">
+
+        <input type="hidden" name="id" th:attr="value=${carAdd.id}"/>
+
         <div class="form-group">
 
             <label>车牌号:</label>
-            <input type="text" class="form-control" placeholder="请输入车牌号"/>
+            <input type="text" class="form-control" placeholder="请输入车牌号" name="carNumber" th:attr="value=${carAdd.carNumber}"/>
         </div>
 
         <div class="form-group">
             <label>车型:</label>
-            <input type="text" class="form-control" placeholder="请输入车型"/>
+            <input type="text" class="form-control" placeholder="请输入车型" name="carType" th:attr="value=${carAdd.carType}"/>
         </div>
 
         <div class="form-group">
             <label>所在店铺:</label>
-            <input type="text" class="form-control" placeholder="请输入车辆所在店铺名称"/>
+            <input type="text" class="form-control" placeholder="请输入车辆所在店铺名称" name="shopName" th:attr="value=${carAdd.shopName}"/>
+        </div>
+
+        <div class="form-group">
+            <label>车状态:</label>
+            <input type="text" class="form-control" placeholder="请输入车的状态" name="carStatus" th:attr="value=${carAdd.carStatus}"/>
         </div>
 
         <div class="checkbox">
             <label>
-                <input type="checkbox"/> 已出租
+                <input type="checkbox" name="isRental" th:attr="checked=${carAdd.isRental}"/> 已出租
             </label>
         </div>
 
