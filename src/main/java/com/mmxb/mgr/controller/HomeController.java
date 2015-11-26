@@ -1,13 +1,14 @@
 package com.mmxb.mgr.controller;
 
 import com.mmxb.mgr.dao.*;
+import com.mmxb.mgr.entity.CarAdd;
 import com.mmxb.mgr.entity.OrderDetail;
 import com.mmxb.mgr.pojo.*;
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -119,6 +120,22 @@ public class HomeController {
     @RequestMapping("/add_car")
     public String add_car() {
         return "add_car";
+    }
+
+    @RequestMapping(value = "/addCar", method = {RequestMethod.POST})
+    public String addCar(@ModelAttribute CarAdd carAdd,Model model) {
+        Car car = new Car();
+        car.setCarNumber(carAdd.getCarNumber());
+        car.setCarType(carAdd.getCarType());
+        car.setShopName(carAdd.getShopName());
+        car.setCarStatus(carAdd.getCarStatus());
+        car.setIsRentaling(carAdd.getIsRental() == null ? "0" : "1");
+        boolean b = carDao.insertCar(car);
+        List<Car> cars = carDao.getCars("");
+        model.addAttribute("carCount", cars.size());
+        model.addAttribute("cars", cars);
+        model.addAttribute("success",b);
+        return "manager_car";
     }
 
 }
