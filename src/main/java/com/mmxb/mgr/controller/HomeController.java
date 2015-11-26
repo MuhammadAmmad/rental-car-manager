@@ -138,4 +138,14 @@ public class HomeController {
         return "manager_car";
     }
 
+    @RequestMapping(value = "/addShop", method = {RequestMethod.POST})
+    public String addShop(@ModelAttribute Shop shop,Model model){
+        boolean insert = shopDao.insert(shop);
+        List<Shop> shops = shopDao.getShops("");
+        model.addAttribute("shopCount", shops.size());
+        model.addAttribute("shops", shops);
+        model.addAttribute("success",insert);
+        return "manager_shop";
+    }
+
 }

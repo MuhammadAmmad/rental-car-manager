@@ -41,4 +41,18 @@ public class ShopDao {
         }
         return shops;
     }
+
+    public boolean insert(Shop shop){
+        SqlSession sqlSession = openSession();
+        ShopMapper mapper = sqlSession.getMapper(ShopMapper.class);
+        ShopExample shopExample = new ShopExample();
+        shopExample.createCriteria().andShopNameEqualTo(shop.getShopName());
+        List<Shop> shops = mapper.selectByExample(shopExample);
+        if (shops != null && shops.size() > 0){
+            return false;
+        }else {
+            mapper.insert(shop);
+            return true;
+        }
+    }
 }
