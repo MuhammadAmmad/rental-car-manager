@@ -17,6 +17,9 @@ public class OrderDetail {
     private Date backTime;
     private String otherServer;
     private String memo;
+    private String price;
+    private String type;
+    private String carType;
 
     public Integer getId() {
         return id;
@@ -104,5 +107,29 @@ public class OrderDetail {
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 }
