@@ -99,6 +99,7 @@ public class OrderServer extends BaseServer {
             orderDetail.setOrderId(order.getOrderId());
             orderDetail.setOrderSatus(order.getOrderSatus());
             orderDetail.setShopName(shop.getShopName());
+            orderDetail.setPosition(shop.getPosition());
             orderDetail.setOutTime(order.getOutTime());
             orderDetail.setBackTime(order.getBackTime());
             orderDetail.setCarNumber(car.getCarNumber());

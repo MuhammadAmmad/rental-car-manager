@@ -39,14 +39,18 @@ public class ShopServer extends BaseServer {
             carExample.createCriteria().andTypeEqualTo(type).andIsRentalingEqualTo("0");
             List<Car> cars = carMapper.selectByExample(carExample);
             List<Integer> shopIds = new ArrayList<Integer>();
-            for (Car car : cars ){
-                shopIds.add(car.getShopId());
+            if (cars != null && cars.size() > 0){
+                for (Car car : cars ){
+                    shopIds.add(car.getShopId());
+                }
+                shopExample.clear();
+                shopExample.createCriteria().andIdIn(shopIds);
+                List<Shop> shops = shopMapper.selectByExample(shopExample);
+                json.put("shops",shops);
+                json.setSuccess(true);
+            }else {
+                json.setSuccess(true);
             }
-            shopExample.clear();
-            shopExample.createCriteria().andIdIn(shopIds);
-            List<Shop> shops = shopMapper.selectByExample(shopExample);
-            json.put("shops",shops);
-            json.setSuccess(true);
         }else {
             json.setSuccess(false);
         }

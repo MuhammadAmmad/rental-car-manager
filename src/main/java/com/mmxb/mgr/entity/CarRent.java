@@ -7,12 +7,21 @@ import java.util.Date;
  */
 public class CarRent {
     private String position;
-    private Date outTime;
-    private Date backTime;
+    private String outTime;
+    private String backTime;
     private String carType;
     private String memo;
     private String type;
     private String otherServer;
+    private String shopId;
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
 
     public String getOtherServer() {
         return otherServer;
@@ -30,19 +39,19 @@ public class CarRent {
         this.position = position;
     }
 
-    public Date getOutTime() {
+    public String getOutTime() {
         return outTime;
     }
 
-    public void setOutTime(Date outTime) {
+    public void setOutTime(String outTime) {
         this.outTime = outTime;
     }
 
-    public Date getBackTime() {
+    public String getBackTime() {
         return backTime;
     }
 
-    public void setBackTime(Date backTime) {
+    public void setBackTime(String backTime) {
         this.backTime = backTime;
     }
 
