@@ -7,5 +7,6 @@
         <mapper resource="mysql.sqlmap/OrderMapper.xml" />
         <mapper resource="mysql.sqlmap/ShopMapper.xml" />
         <mapper resource="mysql.sqlmap/UserMapper.xml" />
+        <mapper resource="mysql.sqlmap/ManagerUserMapper.xml"/>
     </mappers>
 </configuration>

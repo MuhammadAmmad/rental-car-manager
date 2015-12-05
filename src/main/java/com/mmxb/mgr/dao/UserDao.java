@@ -1,6 +1,9 @@
 package com.mmxb.mgr.dao;
 
+import com.mmxb.mgr.mapper.ManagerUserMapper;
 import com.mmxb.mgr.mapper.UserMapper;
+import com.mmxb.mgr.pojo.ManagerUser;
+import com.mmxb.mgr.pojo.ManagerUserExample;
 import com.mmxb.mgr.pojo.User;
 import com.mmxb.mgr.pojo.UserExample;
 import org.apache.ibatis.session.SqlSession;
@@ -41,5 +44,20 @@ public class UserDao {
             users = mapper.selectByExample(userExample);
         }
         return users;
+    }
+
+    public boolean updatePassword(String oldPassword, String newPassword) {
+        SqlSession sqlSession = openSession();
+        ManagerUserMapper mapper = sqlSession.getMapper(ManagerUserMapper.class);
+        ManagerUserExample example = new ManagerUserExample();
+        example.createCriteria().andUsernameEqualTo("admin");
+        ManagerUser managerUsers = mapper.selectByExample(example).get(0);
+        if (managerUsers.getPassword().equals(oldPassword)){
+            managerUsers.setPassword(newPassword);
+            mapper.updateByExample(managerUsers,example);
+            return true;
+        }else {
+            return false;
+        }
     }
 }

@@ -10,6 +10,34 @@ public class CarAdd {
     private String shopName;
     private String isRental;
     private String carStatus;
+    private String price;
+    private String memo;
+    private String car_type;
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    public String getCar_type() {
+        return car_type;
+    }
+
+    public void setCar_type(String car_type) {
+        this.car_type = car_type;
+    }
+
+    public String getPrice() {
+
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
     public Integer getId() {
         return id;

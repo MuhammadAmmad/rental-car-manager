@@ -87,6 +87,9 @@ public class CarDao {
         carAdd.setCarNumber(car.getCarNumber());
         carAdd.setIsRental(car.getIsRentaling());
         carAdd.setShopName(shop == null ? "" : shop.getShopName());
+        carAdd.setPrice(car.getPrice());
+        carAdd.setMemo(car.getMemo());
+        carAdd.setCar_type(car.getType());
         return carAdd;
     }
 
@@ -112,11 +115,15 @@ public class CarDao {
         if (cars != null && cars.size() > 0){
             return false;
         }else {
+            Car car1 = carMapper.selectByPrimaryKey(carAdd.getId());
             car.setId(carAdd.getId());
             car.setCarStatus(carAdd.getCarStatus());
             car.setCarNumber(carAdd.getCarNumber());
             car.setCarType(carAdd.getCarType());
-            car.setIsRentaling("on".equals(carAdd.getIsRental()) ? "1" : "0");
+            car.setIsRentaling(car1.getIsRentaling());
+            car.setType(carAdd.getCar_type());
+            car.setPrice(carAdd.getPrice());
+            car.setMemo(carAdd.getMemo());
             carMapper.updateByPrimaryKey(car);
             return true;
         }

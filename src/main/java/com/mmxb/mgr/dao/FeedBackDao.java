@@ -41,4 +41,10 @@ public class FeedBackDao {
         }
         return cars;
     }
+
+    public FeedBack selectById(Integer integer) {
+        SqlSession sqlSession = openSession();
+        FeedBackMapper mapper = sqlSession.getMapper(FeedBackMapper.class);
+        return mapper.selectByPrimaryKey(integer);
+    }
 }

@@ -4,11 +4,13 @@ import com.mmxb.mgr.dao.*;
 import com.mmxb.mgr.entity.CarAdd;
 import com.mmxb.mgr.entity.OrderDetail;
 import com.mmxb.mgr.pojo.*;
-import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -93,17 +95,23 @@ public class HomeController {
     }
 
     @RequestMapping("/edit_shop")
-    public String edit_shop() {
+    public String edit_shop(@RequestParam(value = "id", defaultValue = "") String id,Model model) {
+        Shop shop = shopDao.selectById(Integer.valueOf(id));
+        model.addAttribute("shop",shop);
         return "edit_shop";
     }
 
     @RequestMapping("/edit_order")
-    public String edit_order() {
+    public String edit_order(@RequestParam(value = "id", defaultValue = "") String id,Model model) {
+        Order order = orderDao.selectById(Integer.valueOf(id));
+        model.addAttribute("order",order);
         return "edit_order";
     }
 
     @RequestMapping("/edit_feedback")
-    public String edit_feedback() {
+    public String edit_feedback(@RequestParam(value = "id", defaultValue = "") String id,Model model) {
+        FeedBack feedBack = feedBackDao.selectById(Integer.valueOf(id));
+        model.addAttribute("feedback",feedBack);
         return "edit_feedback";
     }
 
@@ -138,6 +146,9 @@ public class HomeController {
         car.setShopName(carAdd.getShopName());
         car.setCarStatus(carAdd.getCarStatus());
         car.setIsRentaling(carAdd.getIsRental() == null ? "0" : "1");
+        car.setPrice(carAdd.getPrice());
+        car.setType(carAdd.getCar_type());
+        car.setMemo(carAdd.getMemo());
         boolean b = carDao.insertCar(car);
         List<Car> cars = carDao.getCars("");
         model.addAttribute("carCount", cars.size());
@@ -168,11 +179,38 @@ public class HomeController {
     @RequestMapping("/updateCar")
     public String updateCar(@ModelAttribute CarAdd carAdd,Model model){
         boolean b = carDao.updateCarAdd(carAdd);
-        model.addAttribute("updateSuccess",b);
+        model.addAttribute("updateSuccess", b);
         List<Car> cars = carDao.getCars("");
         model.addAttribute("carCount", cars.size());
         model.addAttribute("cars", cars);
         return "manager_car";
+    }
+
+    @RequestMapping("/updateShop")
+    public String updateShop(@ModelAttribute Shop shop,Model model){
+        boolean b = shopDao.updateShop(shop);
+        model.addAttribute("updateSuccess",b);
+        List<Shop> shops = shopDao.getShops("");
+        model.addAttribute("shopCount", shops.size());
+        model.addAttribute("shops", shops);
+        return "manager_shop";
+    }
+
+    @RequestMapping("/updatePassword")
+         public String updatePassword(Model model,@RequestParam(name = "oldPassword") String oldPassword,@RequestParam(name = "newPassword") String newPassword){
+        boolean b = userDao.updatePassword(oldPassword, newPassword);
+        model.addAttribute("updateSuccess", b);
+        return "manager_system";
+    }
+
+    @RequestMapping("/updateOrder")
+    public String updateOrder(Model model,@RequestParam(name = "id") String id,@RequestParam(name = "orderStatus") String orderStatus){
+        boolean b = orderDao.updateOrder(Integer.valueOf(id),orderStatus);
+        model.addAttribute("updateSuccess", b);
+        List<OrderDetail> orderDetails = orderDao.getOrders("");
+        model.addAttribute("orderCount", orderDetails.size());
+        model.addAttribute("orders", orderDetails);
+        return "manager_order";
     }
 
 }

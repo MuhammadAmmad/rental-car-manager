@@ -26,7 +26,7 @@
 </ul>
 
 
-<form class="search_width">
+<form class="search_width" method="get" action="/manager_shop">
     <div class="input-group">
         <input type="text" class="form-control" placeholder="搜索关键字: 店铺名称/店铺地址" name="keyWord"/>
       <span class="input-group-btn">
@@ -44,6 +44,9 @@
 
 <div th:if="${success} == false">
     <strong>添加失败</strong>
+</div>
+<div th:if="${updateSuccess} == false">
+    <strong>修改失败</strong>
 </div>
 
 <div class="shop_table_width">

@@ -69,4 +69,51 @@ public class OrderDao {
         }
         return orderDetails;
     }
+
+    public Order selectById(Integer integer) {
+        SqlSession session = openSession();
+        OrderMapper orderMapper = session.getMapper(OrderMapper.class);
+        return orderMapper.selectByPrimaryKey(integer);
+    }
+
+    public boolean updateOrder(Integer integer, String orderStatus) {
+        SqlSession session = openSession();
+        OrderMapper orderMapper = session.getMapper(OrderMapper.class);
+        Order order = orderMapper.selectByPrimaryKey(integer);
+        CarMapper carMapper = session.getMapper(CarMapper.class);
+        if (orderStatus.equals("2")){
+            //同意订单
+            order.setOrderSatus("2");
+            orderMapper.updateByPrimaryKey(order);
+            return true;
+        }else if (orderStatus.equals("3")){
+            //拒绝订单
+            order.setOrderSatus("3");
+            orderMapper.updateByPrimaryKey(order);
+            Integer carId = order.getCarId();
+            Car car = carMapper.selectByPrimaryKey(carId);
+            car.setIsRentaling("0");
+            carMapper.updateByPrimaryKey(car);
+            return true;
+        }else if (orderStatus.equals("4")){
+            //订单异常
+            order.setOrderSatus("4");
+            orderMapper.updateByPrimaryKey(order);
+            Integer carId = order.getCarId();
+            Car car = carMapper.selectByPrimaryKey(carId);
+            car.setIsRentaling("0");
+            carMapper.updateByPrimaryKey(car);
+            return true;
+        }else if (orderStatus.equals("5")){
+            //订单完成
+            order.setOrderSatus("5");
+            orderMapper.updateByPrimaryKey(order);
+            Integer carId = order.getCarId();
+            Car car = carMapper.selectByPrimaryKey(carId);
+            car.setIsRentaling("0");
+            carMapper.updateByPrimaryKey(car);
+            return true;
+        }
+        return false;
+    }
 }

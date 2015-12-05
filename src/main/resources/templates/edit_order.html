@@ -26,26 +26,28 @@
 </ul>
 
 <div class="edit_width">
-    <form>
+    <form method="post" action="/updateOrder">
+
+        <!--<div class="checkbox">-->
+            <!--<label> <input type="radio" value="" name="order"/> 订单还未处理，请耐心等待...</label>-->
+        <!--</div>-->
+
+        <input type="hidden" name="id" th:attr="value=${order.id}"/>
 
         <div class="checkbox">
-            <label> <input type="radio" value="" name="order"/> 订单还未处理，请耐心等待...</label>
+            <label> <input type="radio" value="2" name="orderStatus"/> 同意订单</label>
         </div>
 
         <div class="checkbox">
-            <label> <input type="radio" value="" name="order"/> 亲！车已经为您准备好了，请准时取车哦</label>
+            <label> <input type="radio" value="3" name="orderStatus"/> 拒绝订单</label>
         </div>
 
         <div class="checkbox">
-            <label> <input type="radio" value="" name="order"/> 已取车，正在使用中</label>
+            <label> <input type="radio" value="4" name="orderStatus"/> 订单异常</label>
         </div>
 
         <div class="checkbox">
-            <label> <input type="radio" value="" name="order"/> 订单异常，我们的工作人员将会联系您，请保持电话畅通</label>
-        </div>
-
-        <div class="checkbox">
-            <label> <input type="radio" value="" name="order"/> 订单已完成</label>
+            <label> <input type="radio" value="5" name="orderStatus"/> 订单已完成</label>
         </div>
 
         <div class="edit_button_margin">

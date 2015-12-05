@@ -65,6 +65,8 @@
             <th class="text-center">所在店铺</th>
             <th class="text-center">是否被租</th>
             <th class="text-center">车辆状况</th>
+            <th class="text-center">车辆价格</th>
+            <th class="text-center">租车类型</th>
             <th class="text-center">修改信息</th>
             <th class="text-center">删除车辆</th>
         </tr>
@@ -78,6 +80,9 @@
             <td th:if="${car.isRentaling} == '1'" th:text="已出租"></td>
             <td th:if="${car.isRentaling} == '0'" th:text="未出租"></td>
             <td th:text="${car.carStatus}"></td>
+            <td th:text="${car.price}"></td>
+            <td th:if="${car.type} == '1'" th:text="长租"></td>
+            <td th:if="${car.type} == '0'" th:text="短租"></td>
             <td><a href="edit_car.html" th:href="@{/edit_car(id=${car.id})}"><img src="../static/image/edit.png"
                                                                     th:src="@{image/edit.png}"/></a></td>
             <td><a href="" th:href="@{/delete_car(id=${car.id})}"><img src="../static/image/delete.png" th:src="@{image/delete.png}"/></a></td>

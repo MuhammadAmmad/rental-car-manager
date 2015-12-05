@@ -1,6 +1,7 @@
 package com.mmxb.mgr.server.imp;
 
 import com.mmxb.mgr.entity.CarRent;
+import com.mmxb.mgr.entity.CarWithShopName;
 import com.mmxb.mgr.mapper.CarMapper;
 import com.mmxb.mgr.mapper.OrderMapper;
 import com.mmxb.mgr.mapper.ShopMapper;
@@ -9,7 +10,6 @@ import com.mmxb.mgr.pojo.*;
 import com.mmxb.mgr.server.BaseServer;
 import com.mmxb.mgr.server.JsonResponse;
 import org.apache.ibatis.session.SqlSession;
-import org.omg.CORBA.ORB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,11 +41,30 @@ public class CarServer extends BaseServer{
             SqlSession session = openSession();
             CarMapper carMapper = session.getMapper(CarMapper.class);
             CarExample carExample = new CarExample();
+            ShopMapper shopMapper = session.getMapper(ShopMapper.class);
             carExample.createCriteria().andIsRentalingEqualTo("0");
             carExample.setOrderByClause("id ASC LIMIT " + page + ",10");
             List<Car> cars = carMapper.selectByExample(carExample);
             if (cars != null && cars.size() > 0){
-                json.put("cars",cars);
+                List<CarWithShopName> carWithShopNames = new ArrayList<>();
+                for (Car car : cars){
+                    CarWithShopName carWithShopName = new CarWithShopName();
+                    carWithShopName.setCarNumber(car.getCarNumber());
+                    carWithShopName.setMemo(car.getMemo());
+                    carWithShopName.setShopName(car.getShopName());
+                    carWithShopName.setCarStatus(car.getCarStatus());
+                    carWithShopName.setCarType(car.getCarType());
+                    carWithShopName.setId(car.getId());
+                    carWithShopName.setIsRentaling(car.getIsRentaling());
+                    carWithShopName.setPrice(car.getPrice());
+                    carWithShopName.setShopId(car.getShopId());
+                    carWithShopName.setType(car.getType());
+                    Integer shopId = car.getShopId();
+                    Shop shop = shopMapper.selectByPrimaryKey(shopId);
+                    carWithShopName.setPosition(shop.getPosition());
+                    carWithShopNames.add(carWithShopName);
+                }
+                json.put("cars",carWithShopNames);
                 json.setSuccess(true);
             }else{
                 json.setSuccess(false);

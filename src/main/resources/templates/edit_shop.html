@@ -26,16 +26,18 @@
 </ul>
 
 <div class="edit_width">
-    <form>
+    <form method="post" th:action="@{/updateShop}">
+
+        <input type="hidden" name="id" th:attr="value=${shop.id}"/>
         <div class="form-group">
 
             <label>店铺名:</label>
-            <input type="text" class="form-control" placeholder="请输入店铺名称"/>
+            <input type="text" class="form-control" placeholder="请输入店铺名称" name="shopName" th:attr="value=${shop.shopName}"/>
         </div>
 
         <div class="form-group">
             <label>店铺地址:</label>
-            <input type="text" class="form-control" placeholder="请输入店铺地址"/>
+            <input type="text" class="form-control" placeholder="请输入店铺地址" name="position" th:attr="value=${shop.position}"/>
         </div>
 
         <button type="submit" class="btn btn-default">确定修改</button>

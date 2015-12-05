@@ -1,8 +1,10 @@
 package com.mmxb.mgr.server.imp;
 
 import com.mmxb.mgr.mapper.FeedBackMapper;
+import com.mmxb.mgr.mapper.UserMapper;
 import com.mmxb.mgr.pojo.FeedBack;
 import com.mmxb.mgr.pojo.User;
+import com.mmxb.mgr.pojo.UserExample;
 import com.mmxb.mgr.server.BaseServer;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -38,10 +40,16 @@ public class FeedBackServer extends BaseServer {
         if (validateUser(user.getPhoneName(),user.getPassword())){
             SqlSession session = openSession();
             FeedBackMapper feedBackMapper = session.getMapper(FeedBackMapper.class);
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            UserExample userExample = new UserExample();
+            userExample.createCriteria().andPhoneNameEqualTo(user.getPhoneName());
+            User users = userMapper.selectByExample(userExample).get(0);
             FeedBack feedBack1 = new FeedBack();
             feedBack1.setContent(feedBack.getContent());
             feedBack1.setFeedbackTime(new Date());
-            feedBack1.setUserName(user.getPhoneName());
+            feedBack1.setUserName(users.getName());
+            feedBack1.setUserPhone(user.getPhoneName());
+            feedBack1.setFeedbackNumber("0");
             feedBackMapper.insert(feedBack1);
             return "0";
         }else {
